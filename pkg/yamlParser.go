@@ -3,6 +3,7 @@ package FileParser
 import (
 	"log"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"gopkg.in/yaml.v3"
@@ -31,4 +32,14 @@ func Parse(file string) []string {
 		nameHeader = append(nameHeader, str)
 	}
 	return nameHeader
+}
+
+func FileExtensionCheck(ext string) bool {
+	if filepath.Ext(ext) == ".yml" {
+		return true
+	}
+	if filepath.Ext(ext) == ".yaml" {
+		return true
+	}
+	return false
 }
