@@ -11,7 +11,7 @@ import (
 
 type Step struct{ Name string }
 
-func Parse(file string) []string {
+func Parse(file string, listview bool) []string {
 	yfile, err := os.ReadFile(file)
 	if err != nil {
 		log.Fatal(err)
@@ -25,9 +25,16 @@ func Parse(file string) []string {
 
 	var nameHeader []string
 	for _, d := range data {
-		str := strings.ReplaceAll(d.Name, "{}", "")
-		if str == "" {
+		var str string
+
+		if d.Name == "" {
 			continue
+		}
+		if listview {
+			str = strings.Replace(d.Name, "", "- ", 1)
+		}
+		if !listview {
+			str = d.Name
 		}
 		nameHeader = append(nameHeader, str)
 	}
