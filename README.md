@@ -11,3 +11,6 @@ Takes file extensions of `.yml` and `.yaml`. Otherwise will throw error.
 `./dist/YamlNameParser yp -f somefile.yaml`
 #### help
 `./dist/YamlNameParser parse --help`
+`./dist/YamlNameParser --help`
+#### Version
+`./dist/YamlNameParser --version`
