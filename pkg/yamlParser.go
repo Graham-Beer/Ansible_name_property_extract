@@ -44,23 +44,30 @@ func FileExtensionCheck(ext string) bool {
 
 func getSliceData(slice []Step, list bool) []string {
 	var nameHeader []string
+	var str string
 	for _, s := range slice {
-		for _, t := range s.Tasks {
-			if t.Name == "" && s.Name == "" {
-				continue
-			}
-
-			value := t.Name
-			if value == "" {
-				value = s.Name
-			}
-
-			if list {
-				value = strings.Replace(value, "", "- ", 1)
-			}
-
-			nameHeader = append(nameHeader, value)
+		if s.Name == "" {
+			continue
 		}
+		if list {
+			str = strings.Replace(s.Name, "", "- ", 1)
+		} else {
+			str = s.Name
+		}
+		if len(s.Tasks) > 0 {
+			for _, t := range s.Tasks {
+				if t.Name == "" {
+					continue
+				}
+				if list {
+					str = strings.Replace(t.Name, "", "- ", 1)
+				} else {
+					str = t.Name
+				}
+				nameHeader = append(nameHeader, str)
+			}
+		}
+		nameHeader = append(nameHeader, str)
 	}
 	return nameHeader
 }
