@@ -21,3 +21,6 @@ Takes file extensions of `.yml` and `.yaml`. Otherwise will throw error.
 `./dist/YamlNameParser --help`
 #### Version
 `./dist/YamlNameParser --version`
+
+## Version 0.0.4
+Add nested check for `name` property under `tasks`.
