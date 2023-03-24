@@ -9,7 +9,14 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-type Step struct{ Name string }
+type Task struct {
+	Name string
+}
+
+type Step struct {
+	Name  string
+	Tasks []Task
+}
 
 func Parse(file string, listview bool) []string {
 	yfile, err := os.ReadFile(file)
@@ -22,23 +29,7 @@ func Parse(file string, listview bool) []string {
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	var nameHeader []string
-	for _, d := range data {
-		var str string
-
-		if d.Name == "" {
-			continue
-		}
-		if listview {
-			str = strings.Replace(d.Name, "", "- ", 1)
-		}
-		if !listview {
-			str = d.Name
-		}
-		nameHeader = append(nameHeader, str)
-	}
-	return nameHeader
+	return getSliceData(data, listview)
 }
 
 func FileExtensionCheck(ext string) bool {
@@ -49,4 +40,27 @@ func FileExtensionCheck(ext string) bool {
 		return true
 	}
 	return false
+}
+
+func getSliceData(slice []Step, list bool) []string {
+	var nameHeader []string
+	for _, s := range slice {
+		for _, t := range s.Tasks {
+			if t.Name == "" && s.Name == "" {
+				continue
+			}
+
+			value := t.Name
+			if value == "" {
+				value = s.Name
+			}
+
+			if list {
+				value = strings.Replace(value, "", "- ", 1)
+			}
+
+			nameHeader = append(nameHeader, value)
+		}
+	}
+	return nameHeader
 }
