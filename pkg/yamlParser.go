@@ -5,6 +5,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"unicode"
 
 	"gopkg.in/yaml.v3"
 )
@@ -50,9 +51,10 @@ func getSliceData(slice []Step, list bool) []string {
 			continue
 		}
 		if list {
-			str = strings.Replace(s.Name, "", "- ", 1)
+			cv := capitalize(s.Name)
+			str = strings.Replace(cv, "", "- ", 1)
 		} else {
-			str = s.Name
+			str = capitalize(s.Name)
 		}
 		nameHeader = append(nameHeader, str)
 		if len(s.Tasks) > 0 {
@@ -61,13 +63,21 @@ func getSliceData(slice []Step, list bool) []string {
 					continue
 				}
 				if list {
-					str = strings.Replace(t.Name, "", "- ", 1)
+					cv := capitalize(t.Name)
+					str = strings.Replace(cv, "", "- ", 1)
 				} else {
-					str = t.Name
+					str = capitalize(t.Name)
 				}
 				nameHeader = append(nameHeader, str)
 			}
 		}
 	}
 	return nameHeader
+}
+
+func capitalize(str string) string {
+	lc := strings.ToLower(str)
+	runes := []rune(lc)
+	runes[0] = unicode.ToUpper(runes[0])
+	return string(runes)
 }
