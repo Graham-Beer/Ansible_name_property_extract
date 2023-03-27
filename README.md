@@ -24,3 +24,6 @@ Takes file extensions of `.yml` and `.yaml`. Otherwise will throw error.
 
 ## Version 0.0.4
 Add nested check for `name` property under `tasks`.
+
+## Version 0.0.5
+Convert output string to lower with upper case for the first word only.
