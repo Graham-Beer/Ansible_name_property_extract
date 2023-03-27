@@ -54,6 +54,7 @@ func getSliceData(slice []Step, list bool) []string {
 		} else {
 			str = s.Name
 		}
+		nameHeader = append(nameHeader, str)
 		if len(s.Tasks) > 0 {
 			for _, t := range s.Tasks {
 				if t.Name == "" {
@@ -67,7 +68,6 @@ func getSliceData(slice []Step, list bool) []string {
 				nameHeader = append(nameHeader, str)
 			}
 		}
-		nameHeader = append(nameHeader, str)
 	}
 	return nameHeader
 }
